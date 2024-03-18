@@ -39,6 +39,7 @@ const NavbarRoutes = () => {
         {routes.map((route)=>(
 
            <NavbarItem
+           key={route.href}
            href={route.href}
            label={route.label}
            />
