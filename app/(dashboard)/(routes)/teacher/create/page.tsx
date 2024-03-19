@@ -82,7 +82,7 @@ const NewCoursePage = () => {
             <FormItem>
               <FormLabel>Title</FormLabel>
               <FormControl>
-                <Input placeholder="Course Title" {...field} />
+                <Input disabled={isSubmiting} placeholder="Course Title" {...field} />
               </FormControl>
              
               <FormMessage />

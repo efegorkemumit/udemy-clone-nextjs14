@@ -20,30 +20,31 @@ import { toast } from '@/components/ui/use-toast'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { Edit, Undo } from 'lucide-react'
+import { Textarea } from '@/components/ui/textarea'
 
 
 
 const formSchema = z.object({
-    title: z.string().min(1, {
-      message: "title must be at least 1 characters.",
+    description: z.string().min(1, {
+      message: "description is required.",
     }),
   })
 
 
-interface TitleFormProps{
+interface DescriptionFormProps{
     initaldata:{
-        title:string
+        description:string
     },
     courseId:string
 }
 
-const TitleForm = ({courseId, initaldata}:TitleFormProps) => {
+const DescriptionForm = ({courseId, initaldata}:DescriptionFormProps) => {
     
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            title: "",
+            description: "",
         },
       })
 
@@ -71,12 +72,10 @@ const TitleForm = ({courseId, initaldata}:TitleFormProps) => {
             const response  = await axios.patch(`/api/courses/${courseId}`, values);
             toast({
                 title: "Success",
-                description: "Title is changed",
+                description: "description is changed",
                 variant:'success'
               })
-
               toogleEdit();
-
               router.refresh();
             
             
@@ -96,7 +95,7 @@ const TitleForm = ({courseId, initaldata}:TitleFormProps) => {
   return (
    <div className='mt-10 bg-slate-100 rounded-lg p-5'>
     <div className='flex items-center justify-between'>
-        <h1 className='font-semibold'>Course Title</h1>
+        <h1 className='font-semibold'>Course Description</h1>
         <Button onClick={toogleEdit}  variant="ghost">
             {isEditing ?(
                 <>
@@ -118,7 +117,7 @@ const TitleForm = ({courseId, initaldata}:TitleFormProps) => {
 
     {!isEditing && (
         <p className='text-base mt-3'>
-            {initaldata.title}
+            {initaldata.description}
 
         </p>
     )}
@@ -128,11 +127,16 @@ const TitleForm = ({courseId, initaldata}:TitleFormProps) => {
 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
   <FormField
     control={form.control}
-    name="title"
+    name="description"
     render={({ field }) => (
       <FormItem>
         <FormControl>
-          <Input disabled={isSubmiting} placeholder="Course Title" {...field} />
+            <Textarea 
+            disabled={isSubmiting}
+            {...field}
+             placeholder="This course is about....."
+             ></Textarea>
+         
         </FormControl>
        
         <FormMessage />
@@ -163,4 +167,4 @@ const TitleForm = ({courseId, initaldata}:TitleFormProps) => {
   )
 }
 
-export default TitleForm
+export default DescriptionForm
