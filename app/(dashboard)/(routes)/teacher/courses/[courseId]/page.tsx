@@ -4,6 +4,7 @@ import { auth } from '@clerk/nextjs'
 import { LayoutDashboardIcon } from 'lucide-react'
 import { redirect } from 'next/navigation'
 import React from 'react'
+import TitleForm from './_components/TitleForm'
 
 interface CourseDetailProps{
     params:{
@@ -78,6 +79,11 @@ const CourseDetail = async({params}:CourseDetailProps) => {
             <h2 className='text-xl'>Customize your course</h2>
 
           </div>
+
+          <TitleForm
+          courseId={course.id}
+          initaldata={course}
+          />
 
 
         </div>
