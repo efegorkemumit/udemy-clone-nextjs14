@@ -8,3 +8,5 @@ body,
 :root{
     height: 100%;
 }
+
+@import "@uploadthing/react/styles.css";

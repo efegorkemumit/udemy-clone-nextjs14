@@ -23,6 +23,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toast": "^1.1.5",
     "@tanstack/react-table": "^8.13.2",
+    "@uploadthing/react": "^6.4.0",
     "axios": "^1.6.8",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
@@ -37,6 +38,7 @@
     "sonner": "^1.4.3",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
+    "uploadthing": "^6.6.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
