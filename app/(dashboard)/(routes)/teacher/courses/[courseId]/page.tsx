@@ -1,11 +1,12 @@
 import { Badge } from '@/components/ui/badge'
 import { prismadb } from '@/lib/db'
 import { auth } from '@clerk/nextjs'
-import { DessertIcon, LayoutDashboardIcon } from 'lucide-react'
+import { DessertIcon, ImageIcon, LayoutDashboardIcon } from 'lucide-react'
 import { redirect } from 'next/navigation'
 import React from 'react'
 import TitleForm from './_components/TitleForm'
 import DescriptionForm from './_components/DescriptionForm'
+import ImageForm from './_components/ImageForm'
 
 interface CourseDetailProps{
     params:{
@@ -101,6 +102,27 @@ const CourseDetail = async({params}:CourseDetailProps) => {
           </div>
 
           <DescriptionForm
+          courseId={course.id}
+          initaldata={course}
+          />
+
+
+        </div>
+
+
+
+            {/** Col-span-1 */}
+    <div>
+          <div className='flex items-center gap-2'>
+
+            <Badge variant="mybadge" className='p-4'>
+              <ImageIcon className='h-8 w-8 text-purple-700'/>
+            </Badge>
+            <h2 className='text-xl'>Image your course</h2>
+
+          </div>
+
+          <ImageForm
           courseId={course.id}
           initaldata={course}
           />

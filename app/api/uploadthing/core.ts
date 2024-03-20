@@ -14,13 +14,13 @@ const handleAuth=() =>{
  
  
 export const ourFileRouter = {
-    courseImage : f({ image: { maxFileSize: "4MB", maxFileCount=1 } })
+    courseImage : f({ image: { maxFileSize: "4MB", maxFileCount:1 } })
     .middleware(()=>handleAuth())
     .onUploadComplete(()=>{}),
     courseAttachment : f(["image", "video", "pdf", "text", "audio"])
     .middleware(()=>handleAuth())
     .onUploadComplete(()=>{}),
-    courseVideo : f({ video: { maxFileSize: "128GB", maxFileCount=1 } })
+    courseVideo : f({ video: { maxFileSize: "128GB", maxFileCount:1 } })
     .middleware(()=>handleAuth())
     .onUploadComplete(()=>{}),
 
