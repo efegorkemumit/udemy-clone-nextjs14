@@ -8,6 +8,8 @@ import TitleForm from './_components/TitleForm'
 import DescriptionForm from './_components/DescriptionForm'
 import ImageForm from './_components/ImageForm'
 import CategoryForm from './_components/CategoryForm'
+import PriceForm from './_components/PriceForm'
+import { CiMoneyBill } from 'react-icons/ci'
 
 interface CourseDetailProps{
     params:{
@@ -153,6 +155,27 @@ const CourseDetail = async({params}:CourseDetailProps) => {
             label: category.name,
             value: category.id
           }))}
+          courseId={course.id}
+          initaldata={course}
+          />
+
+        
+
+
+        </div>
+
+             {/** Col-span-1 */}
+    <div>
+          <div className='flex items-center gap-2'>
+
+            <Badge variant="mybadge" className='p-4'>
+              <CiMoneyBill className='h-8 w-8 text-purple-700'/>
+            </Badge>
+            <h2 className='text-xl'>Price</h2>
+
+          </div>
+
+          <PriceForm
           courseId={course.id}
           initaldata={course}
           />
