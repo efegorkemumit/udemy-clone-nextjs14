@@ -1,12 +1,13 @@
 import { Badge } from '@/components/ui/badge'
 import { prismadb } from '@/lib/db'
 import { auth } from '@clerk/nextjs'
-import { DessertIcon, ImageIcon, LayoutDashboardIcon } from 'lucide-react'
+import { CassetteTape, DessertIcon, ImageIcon, LayoutDashboardIcon } from 'lucide-react'
 import { redirect } from 'next/navigation'
 import React from 'react'
 import TitleForm from './_components/TitleForm'
 import DescriptionForm from './_components/DescriptionForm'
 import ImageForm from './_components/ImageForm'
+import CategoryForm from './_components/CategoryForm'
 
 interface CourseDetailProps{
     params:{
@@ -46,6 +47,12 @@ const CourseDetail = async({params}:CourseDetailProps) => {
   const completeFields = RequiredFields.filter(Boolean).length;
 
   const completeText = `(${completeFields}/${totalFields})`
+
+  const categories = await prismadb.category.findMany({
+    orderBy:{
+      name:"asc"
+    },
+  });
 
 
 
@@ -126,6 +133,31 @@ const CourseDetail = async({params}:CourseDetailProps) => {
           courseId={course.id}
           initaldata={course}
           />
+
+
+        </div>
+
+            {/** Col-span-1 */}
+    <div>
+          <div className='flex items-center gap-2'>
+
+            <Badge variant="mybadge" className='p-4'>
+              <CassetteTape className='h-8 w-8 text-purple-700'/>
+            </Badge>
+            <h2 className='text-xl'>Category</h2>
+
+          </div>
+
+          <CategoryForm
+          options={categories.map((category)=>({
+            label: category.name,
+            value: category.id
+          }))}
+          courseId={course.id}
+          initaldata={course}
+          />
+
+        
 
 
         </div>
