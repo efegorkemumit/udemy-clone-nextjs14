@@ -122,7 +122,7 @@ const CourseDetail = async({params}:CourseDetailProps) => {
             <Badge variant="mybadge" className='p-4'>
               <BarChart3 className='h-8 w-8 text-purple-700'/>
             </Badge>
-            <h2 className='text-xl'>Chart</h2>
+            <h2 className='text-xl'>Chapter</h2>
 
           </div>
 

@@ -21,6 +21,7 @@ import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { Edit, Plus, Undo } from 'lucide-react'
 import { Chapter, Course } from '@prisma/client'
+import ChapterList from './ChapterList'
 
 const formSchema = z.object({
     title: z.string().min(1),
@@ -83,6 +84,45 @@ const ChapterForm = ({courseId,initaldata}:ChapterFormProps) => {
 
       }
 
+      const onReoder = async (updateData: {id:string, position:number}[])=>{
+
+        try {
+          setIsUpdating(true)
+
+          await axios.put(`/api/courses/${courseId}/chapters/reorder`,{
+            list:updateData
+          });
+          toast({
+            title: "Success",
+            description: "....",
+            variant:'success'
+          })
+          router.refresh();
+
+          
+        } catch (error) {
+
+          toast({
+            title: "Something Went Wrong",
+            description: error.message,
+            variant:'destructive'
+          })
+          
+        }
+        finally{
+          setIsUpdating(false)
+
+        }
+
+
+
+
+      }
+
+      const onEdit = (id:string)=>{
+        router.push(`/teacher/courses/${courseId}/chapters/${id}`)
+      }
+
 
 
 
@@ -116,18 +156,24 @@ const ChapterForm = ({courseId,initaldata}:ChapterFormProps) => {
         <p className='text-base mt-3'>
             {initaldata.chapters.length === 0 &&(
                 <div>
-                    No Result Chapter
+                    <p>No Result Chapter</p>
 
 
                 </div>
             )}
 
             {initaldata.chapters.length > 0 &&(
-                <div>
-                   asdasd
+               
+                      <ChapterList
+                      items={initaldata.chapters || []}
+                      onEdit={onEdit}
+                      onReoder={onReoder}
+                      
+                      />
 
 
-                </div>
+
+               
             )}
 
           
