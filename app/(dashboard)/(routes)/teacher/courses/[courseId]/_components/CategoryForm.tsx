@@ -81,7 +81,7 @@ const CategoryForm = ({courseId,initaldata,options}:CategoryFormProps) => {
 
             toast({
                 title: "Something Went Wrong",
-                description: error,
+                description: error.message,
                 variant:'destructive'
               })
             

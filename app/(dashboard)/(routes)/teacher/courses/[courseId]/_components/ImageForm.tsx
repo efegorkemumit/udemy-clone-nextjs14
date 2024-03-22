@@ -81,7 +81,7 @@ const ImageForm = ({courseId,initaldata}:ImageFormProps) => {
 
             toast({
                 title: "Something Went Wrong",
-                description: error,
+                description: error.message,
                 variant:'destructive'
               })
             

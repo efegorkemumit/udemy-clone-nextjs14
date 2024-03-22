@@ -84,7 +84,7 @@ const TitleForm = ({courseId, initaldata}:TitleFormProps) => {
 
             toast({
                 title: "Something Went Wrong",
-                description: error,
+                description: error.message,
                 variant:'destructive'
               })
             

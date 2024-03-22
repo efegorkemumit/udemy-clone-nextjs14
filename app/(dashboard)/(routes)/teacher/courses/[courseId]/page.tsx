@@ -1,7 +1,7 @@
 import { Badge } from '@/components/ui/badge'
 import { prismadb } from '@/lib/db'
 import { auth } from '@clerk/nextjs'
-import { CassetteTape, DessertIcon, ImageIcon, LayoutDashboardIcon } from 'lucide-react'
+import { CassetteTape, DessertIcon, ImageIcon, LayoutDashboardIcon, PinIcon } from 'lucide-react'
 import { redirect } from 'next/navigation'
 import React from 'react'
 import TitleForm from './_components/TitleForm'
@@ -10,6 +10,7 @@ import ImageForm from './_components/ImageForm'
 import CategoryForm from './_components/CategoryForm'
 import PriceForm from './_components/PriceForm'
 import { CiMoneyBill } from 'react-icons/ci'
+import AttachmentForm from './_components/AttachmentForm'
 
 interface CourseDetailProps{
     params:{
@@ -28,6 +29,13 @@ const CourseDetail = async({params}:CourseDetailProps) => {
   const course = await prismadb.course.findUnique({
     where:{
       id:params.courseId
+    },
+    include:{
+      attachments:{
+        orderBy:{
+          createdAt:"desc"
+        }
+      }
     }
   })
 
@@ -176,6 +184,28 @@ const CourseDetail = async({params}:CourseDetailProps) => {
           </div>
 
           <PriceForm
+          courseId={course.id}
+          initaldata={course}
+          />
+
+        
+
+
+        </div>
+
+
+            {/** Col-span-1 */}
+    <div>
+          <div className='flex items-center gap-2'>
+
+            <Badge variant="mybadge" className='p-4'>
+              <PinIcon className='h-8 w-8 text-purple-700'/>
+            </Badge>
+            <h2 className='text-xl'>Price</h2>
+
+          </div>
+
+          <AttachmentForm
           courseId={course.id}
           initaldata={course}
           />

@@ -83,7 +83,7 @@ const DescriptionForm = ({courseId, initaldata}:DescriptionFormProps) => {
 
             toast({
                 title: "Something Went Wrong",
-                description: error,
+                description: error.message,
                 variant:'destructive'
               })
             

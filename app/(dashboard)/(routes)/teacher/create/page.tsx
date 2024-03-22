@@ -53,7 +53,7 @@ const NewCoursePage = () => {
 
             toast({
                 title: "Something Went Wrong",
-                description: error,
+                description: error.message,
                 variant:'destructive'
               })
             
