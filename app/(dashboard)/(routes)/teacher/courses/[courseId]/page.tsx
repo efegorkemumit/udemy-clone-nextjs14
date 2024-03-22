@@ -1,7 +1,7 @@
 import { Badge } from '@/components/ui/badge'
 import { prismadb } from '@/lib/db'
 import { auth } from '@clerk/nextjs'
-import { CassetteTape, DessertIcon, ImageIcon, LayoutDashboardIcon, PinIcon } from 'lucide-react'
+import { BarChart3, CassetteTape, DessertIcon, ImageIcon, LayoutDashboardIcon, PinIcon } from 'lucide-react'
 import { redirect } from 'next/navigation'
 import React from 'react'
 import TitleForm from './_components/TitleForm'
@@ -11,6 +11,7 @@ import CategoryForm from './_components/CategoryForm'
 import PriceForm from './_components/PriceForm'
 import { CiMoneyBill } from 'react-icons/ci'
 import AttachmentForm from './_components/AttachmentForm'
+import ChapterForm from './_components/ChapterForm'
 
 interface CourseDetailProps{
     params:{
@@ -31,6 +32,11 @@ const CourseDetail = async({params}:CourseDetailProps) => {
       id:params.courseId
     },
     include:{
+      chapters:{
+        orderBy:{
+          position:"asc"
+        }
+      },
       attachments:{
         orderBy:{
           createdAt:"desc"
@@ -48,7 +54,8 @@ const CourseDetail = async({params}:CourseDetailProps) => {
     course.description,
     course.imageUrl,
     course.price,
-    course.categoryId
+    course.categoryId,
+    course.chapters.some(chapter =>chapter.isPublished)
 
   ]
 
@@ -100,6 +107,26 @@ const CourseDetail = async({params}:CourseDetailProps) => {
           </div>
 
           <TitleForm
+          courseId={course.id}
+          initaldata={course}
+          />
+
+
+        </div>
+
+
+      {/** Col-span-1 */}
+      <div>
+          <div className='flex items-center gap-2 mt-4'>
+
+            <Badge variant="mybadge" className='p-4'>
+              <BarChart3 className='h-8 w-8 text-purple-700'/>
+            </Badge>
+            <h2 className='text-xl'>Chart</h2>
+
+          </div>
+
+          <ChapterForm
           courseId={course.id}
           initaldata={course}
           />
