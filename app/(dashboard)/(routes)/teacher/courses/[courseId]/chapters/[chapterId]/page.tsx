@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation';
 import React from 'react'
 import TitleForm from '../_components/TitleForm';
+import ChapterDescriptionForm from '../_components/ChapterDescriptionForm';
 
 interface ChapterIDPageProps{
     params:{
@@ -103,6 +104,14 @@ const {userId} = auth();
           >
 
           </TitleForm>
+
+          <ChapterDescriptionForm
+          initaldata={chapter}
+          chapterId={params.chapterId}
+          courseId={params.courseId}
+          >
+
+          </ChapterDescriptionForm>
 
           
 
