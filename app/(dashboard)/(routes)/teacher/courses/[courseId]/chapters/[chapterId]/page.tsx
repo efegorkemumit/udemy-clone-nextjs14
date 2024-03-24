@@ -5,6 +5,7 @@ import { ArrowLeft, ChevronLeft, LayoutDashboardIcon } from 'lucide-react';
 import Link from 'next/link'
 import { redirect } from 'next/navigation';
 import React from 'react'
+import TitleForm from '../_components/TitleForm';
 
 interface ChapterIDPageProps{
     params:{
@@ -94,6 +95,14 @@ const {userId} = auth();
             <h2 className='text-xl'>Customize your course</h2>
 
           </div>
+
+          <TitleForm
+          initaldata={chapter}
+          chapterId={params.chapterId}
+          courseId={params.courseId}
+          >
+
+          </TitleForm>
 
           
 
