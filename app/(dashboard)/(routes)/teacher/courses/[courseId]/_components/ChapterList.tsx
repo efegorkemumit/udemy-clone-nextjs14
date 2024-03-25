@@ -89,17 +89,22 @@ const ChapterList = ({items,onEdit,onReoder}:ChapterListProps) => {
                 >
 
 
-                <div className='flex items-center justify-center gap-x-2 bg-slate-200 mb-3 text-sm border-slate-200 '>
+<div className={cn("flex items-center justify-center gap-x-2 bg-slate-200 mb-3 text-sm border-slate-200",
+item.isPublished && "bg-purple-200")}>
 
                         <div className='px-2 py-3 border-r-slate-400 border-r hover:bg-slate-300'><Grid className='h-5 w-5 mr-2'/></div>
                     <div> {item.title}</div>
                     <div className='ml-auto flex items-center'> 
 
                     <div>
+                    {item.isFree &&(
+                       <Badge className='p-2 bg-green-500 text-black'>
+                       Free
+                   </Badge>
 
-                        <Badge className='p-2 bg-green-500 text-black'>
-                            Free
-                        </Badge>
+                    )}
+
+                       
 
                         <Badge className={cn("p-2 bg-slate-300 text-black",
                         item.isPublished && "bg-purple-500 text-white")}>
