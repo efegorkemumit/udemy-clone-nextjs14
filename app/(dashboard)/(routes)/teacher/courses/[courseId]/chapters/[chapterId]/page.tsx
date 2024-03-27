@@ -1,13 +1,14 @@
 import { Badge } from '@/components/ui/badge';
 import { prismadb } from '@/lib/db';
 import { auth } from '@clerk/nextjs';
-import { ArrowLeft, ChevronLeft, LayoutDashboardIcon } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, LayoutDashboardIcon, VideoIcon } from 'lucide-react';
 import Link from 'next/link'
 import { redirect } from 'next/navigation';
 import React from 'react'
 import TitleForm from '../_components/TitleForm';
 import ChapterDescriptionForm from '../_components/ChapterDescriptionForm';
 import ChapterAccessForm from '../_components/ChapterAccessForm';
+import ChapterVideoForm from '../_components/ChapterVideoForm';
 
 interface ChapterIDPageProps{
     params:{
@@ -119,6 +120,33 @@ const {userId} = auth();
           chapterId={params.chapterId}
           courseId={params.courseId}
           />
+          
+
+          
+
+
+        </div>
+
+             {/** Col-span-1 */}
+             <div>
+          <div className='flex items-center gap-2'>
+
+            <Badge variant="mybadge" className='p-4'>
+              <VideoIcon className='h-8 w-8 text-purple-700'/>
+            </Badge>
+            <h2 className='text-xl'>Chapter Detail</h2>
+
+          </div>
+
+          <ChapterVideoForm
+          initaldata={chapter}
+          chapterId={params.chapterId}
+          courseId={params.courseId}
+          >
+
+          </ChapterVideoForm>
+
+         
           
 
           

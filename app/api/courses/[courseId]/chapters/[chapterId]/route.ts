@@ -1,6 +1,15 @@
 import { prismadb } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
+import Mux from '@mux/mux-node';
+
+
+
+const muxVideo = new Mux({
+  tokenId: process.env.MUX_TOKEN_ID,
+  tokenSecret: process.env.MUX_TOKEN_SECRET
+});
+
 
 export async function PATCH(req:Request, {params} :
      {params :{courseId:string, chapterId:string}}) {
@@ -42,7 +51,54 @@ export async function PATCH(req:Request, {params} :
                 });
 
 
-                ////
+               
+                if(values.videoUrl){
+                  console.log("[PATCH] Creating Mux asset with video URL:", values.videoUrl);
+                  
+
+                  const existingMuxData = await prismadb.muxData.findFirst({
+                    where:{
+                      chapterId:params.chapterId
+                    }
+
+                  })
+
+                  if(existingMuxData){
+                    await muxVideo.video.assets.delete(existingMuxData.assetId);
+                    await prismadb.muxData.delete({
+                      where:{
+                        id:existingMuxData.id
+                      }
+                    })
+                  }
+
+                  const asset = await muxVideo.video.assets.create({
+                    input_url: values.videoUrl,
+
+                    playback_policy: ["public"],
+                    encoding_tier: "smart" // Bu satırı smart olarak ayarlayabilirsiniz, istediğiniz encoding tier'a göre değiştirin
+         
+
+                  })
+
+                  console.log("[PATCH] Mux asset created:", asset);
+
+                  await prismadb.muxData.create({
+                    data:{
+                      chapterId:params.chapterId,
+                      assetId:asset.id,
+                      playbackId:asset.playback_ids?.[0]?.id,
+                    }
+                  })
+
+
+
+
+
+
+
+
+                }
 
 
                 return NextResponse.json(chapter)
