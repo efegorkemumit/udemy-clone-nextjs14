@@ -9,6 +9,8 @@ import TitleForm from '../_components/TitleForm';
 import ChapterDescriptionForm from '../_components/ChapterDescriptionForm';
 import ChapterAccessForm from '../_components/ChapterAccessForm';
 import ChapterVideoForm from '../_components/ChapterVideoForm';
+import Banner from '@/components/Banner';
+import ChapterAction from '../_components/ChapterAction';
 
 interface ChapterIDPageProps{
     params:{
@@ -50,6 +52,8 @@ const {userId} = auth();
     const completedFields = requiredFields.filter(Boolean).length;
     const completeText =  `(${completedFields}/${totalFields})`
 
+    const isComplete = requiredFields.every(Boolean);
+
 
 
 
@@ -57,7 +61,19 @@ const {userId} = auth();
 
 
   return (
-    <div className='p-4'>
+  <>
+
+  {!chapter.isPublished &&(
+    <Banner
+    label='This chapter is unplished'
+    variant="warning">
+
+    </Banner>
+  )}
+
+
+
+    <div className='p-4  '>
 
         <div className='flex items-center justify-between'>
             <div className='w-full'>
@@ -146,6 +162,15 @@ const {userId} = auth();
 
           </ChapterVideoForm>
 
+
+<ChapterAction
+chapterId={params.chapterId}
+courseId={params.courseId}
+disabled={!isComplete}
+isPublished={chapter.isPublished}
+
+/>
+
          
           
 
@@ -163,6 +188,8 @@ const {userId} = auth();
         
         
     </div>
+
+    </>
   )
 }
 
