@@ -75,8 +75,8 @@ const {userId} = auth();
 
     <div className='p-4  '>
 
-        <div className='flex items-center justify-between'>
-            <div className='w-full'>
+        <div className=' items-center justify-between'>
+            <div className='w-36'>
                 <Link href={`/teacher/courses/${params.courseId}`} 
                 className='flex items-center'>
 
@@ -84,22 +84,32 @@ const {userId} = auth();
              
                 </Link>
 
-                <div className='flex items-center justify-between w-full mt-4'>
-                    <h1>Chapter Creation</h1>
+             
+
+
+            </div>
+
+            <div className='flex items-center justify-between w-full mt-4'>
+                    <h1 className='text-4xl font-semibold'>Chapter Creation</h1>
 
                     <span>
 
                         Complete All fields {completeText}
+
+
+                        <ChapterAction
+chapterId={params.chapterId}
+courseId={params.courseId}
+disabled={!isComplete}
+isPublished={chapter.isPublished}
+
+/>
+
                     </span>
 
 
 
                 </div>
-
-
-            </div>
-
-
         </div>
 
         <div className='grid grid-cols-1 md:grid-cols-2 gap-3  mt-5 md:mt-16'>
@@ -163,13 +173,7 @@ const {userId} = auth();
           </ChapterVideoForm>
 
 
-<ChapterAction
-chapterId={params.chapterId}
-courseId={params.courseId}
-disabled={!isComplete}
-isPublished={chapter.isPublished}
 
-/>
 
          
           

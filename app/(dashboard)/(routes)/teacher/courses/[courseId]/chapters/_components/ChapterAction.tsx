@@ -21,16 +21,16 @@ const ChapterAction = ({chapterId,courseId,disabled,isPublished}:ChapterActionpr
     const [isLoading, setIsLoading] =useState(false);
 
     const onClick = async()=>{
-        try {
 
+        try {
             setIsLoading(true);
 
             if(isPublished){
 
-                await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}/unpublish`, values);
+                await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}/unpublish`);
                 toast({
                     title: "Success",
-                    description: "imageUrl is changed",
+                    description: "status is changed",
                     variant:'success'
                   })
 
@@ -39,10 +39,10 @@ const ChapterAction = ({chapterId,courseId,disabled,isPublished}:ChapterActionpr
             }
             else
             {
-                await axios.post(`/api/courses/${courseId}/chapters/${chapterId}/publish`, values);
+                await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}/publish`);
                 toast({
                     title: "Success",
-                    description: "imageUrl is changed",
+                    description: "status is changed",
                     variant:'success'
                   })
 
@@ -80,7 +80,7 @@ const ChapterAction = ({chapterId,courseId,disabled,isPublished}:ChapterActionpr
                   })
 
                   router.refresh();
-                  router.push(`teacher/courses/${courseId}`)
+                  router.push(`/teacher/courses/${courseId}`)
 
         
             

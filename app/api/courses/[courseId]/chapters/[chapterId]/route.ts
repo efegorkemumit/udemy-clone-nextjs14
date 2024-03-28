@@ -64,7 +64,12 @@ export async function PATCH(req:Request, {params} :
                   })
 
                   if(existingMuxData){
-                    await muxVideo.video.assets.delete(existingMuxData.assetId);
+                    try {
+                      await muxVideo.video.assets.delete(existingMuxData.assetId);
+
+                    } catch (error) {
+                      
+                    }
                     await prismadb.muxData.delete({
                       where:{
                         id:existingMuxData.id
@@ -112,6 +117,125 @@ export async function PATCH(req:Request, {params} :
             return new NextResponse("Inital Error", {status:500})
             
         }
+
+
+
+
+}
+
+
+export async function DELETE(req:Request, {params} :
+  {params :{courseId:string, chapterId:string}}) {
+
+     try {
+
+             const {userId} = auth();
+
+
+
+             if(!userId){
+                 return new NextResponse("Unauthorized", {status:401})
+             }
+
+             const courseOwner = await prismadb.course.findUnique({
+
+                 where: {
+                     id:params.courseId,
+                     userId:userId
+                 }
+
+
+             })
+
+             if(!courseOwner){
+                 return new NextResponse("Unauthorized", {status:401})
+
+             }
+
+             const chapter = await prismadb.chapter.findUnique({
+              where:{
+                id:params.chapterId,
+                courseId:params.courseId
+              }
+             })
+
+             if(!chapter){
+              return new NextResponse("Not found", {status:404})
+
+              }
+
+
+
+            
+             if(chapter.videoUrl){
+               
+
+               const existingMuxData = await prismadb.muxData.findFirst({
+                 where:{
+                   chapterId:params.chapterId
+                 }
+
+               })
+
+               if(existingMuxData){
+                try {
+                  await muxVideo.video.assets.delete(existingMuxData.assetId);
+
+                } catch (error) {
+                  
+                }
+                 await prismadb.muxData.delete({
+                   where:{
+                     id:existingMuxData.id
+                   }
+                 })
+               }
+
+
+
+
+             }
+
+
+             const deletedChapter = await prismadb.chapter.delete({
+              where:{
+                id:params.chapterId
+              }
+             })
+
+             const publishedChapter = await prismadb.chapter.findMany({
+              where:{
+                courseId:params.courseId,
+                isPublished:true,
+              }
+             })
+
+             if(!publishedChapter.length){
+              await prismadb.course.update({
+                where:{
+                  id:params.courseId
+                },
+                data:{
+                  isPublished:false
+                }
+              })
+
+
+             }
+
+
+
+             return NextResponse.json(deletedChapter)
+
+     
+
+         
+     } catch (error) {
+
+         console.log("[CHAPTERID]", error);
+         return new NextResponse("Inital Error", {status:500})
+         
+     }
 
 
 
