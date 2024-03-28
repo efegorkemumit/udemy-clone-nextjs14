@@ -74,7 +74,7 @@ const CourseAction = ({courseId,disabled,isPublished}:ChapterActionprops) => {
                 await axios.delete(`/api/courses/${courseId}`);
                 toast({
                     title: "Success",
-                    description: "Chapter is deleted",
+                    description: "Course is deleted",
                     variant:'success'
                   })
 
