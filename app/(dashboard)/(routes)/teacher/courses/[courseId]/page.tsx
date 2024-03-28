@@ -12,6 +12,8 @@ import PriceForm from './_components/PriceForm'
 import { CiMoneyBill } from 'react-icons/ci'
 import AttachmentForm from './_components/AttachmentForm'
 import ChapterForm from './_components/ChapterForm'
+import Banner from '@/components/Banner'
+import CourseAction from './_components/CourseAction'
 
 interface CourseDetailProps{
     params:{
@@ -26,6 +28,7 @@ const CourseDetail = async({params}:CourseDetailProps) => {
   if(!userId){
     return redirect("/");
   }
+
 
   const course = await prismadb.course.findUnique({
     where:{
@@ -59,6 +62,9 @@ const CourseDetail = async({params}:CourseDetailProps) => {
 
   ]
 
+  const isComplete = RequiredFields.every(Boolean);
+
+
   const totalFields = RequiredFields.length;
 
   const completeFields = RequiredFields.filter(Boolean).length;
@@ -74,8 +80,22 @@ const CourseDetail = async({params}:CourseDetailProps) => {
 
 
 
+
+
   return (
+
+    <>
+
+{!course.isPublished &&(
+    <Banner
+    label='This course is unplished'
+    variant="warning">
+
+    </Banner>
+  )}
+    
     <div className=''>
+
 
       <div className='flex items-center justify-between'>
         <div className='flex flex-col gap-y-3'>
@@ -85,6 +105,13 @@ const CourseDetail = async({params}:CourseDetailProps) => {
           <span className='text-base'>Complete all fields {completeText}</span>
 
         </div>
+
+        <CourseAction
+courseId={params.courseId}
+disabled={!isComplete}
+isPublished={course.isPublished}
+
+/>
 
 
 
@@ -248,6 +275,8 @@ const CourseDetail = async({params}:CourseDetailProps) => {
      
 
     </div>
+
+    </>
   )
 }
 
