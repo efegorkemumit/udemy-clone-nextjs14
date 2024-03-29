@@ -38,10 +38,13 @@ const Banner = ({label,variant}:BannerProps) => {
 
     const Icon = IconMap[variant || "warning"]
   return (
+    <div className="mb-11">
     <div className={cn(bannerVariants({variant}))}>
         <Icon className="h-5 w-5 mr-2"/>
         {label}
 
+
+    </div>
 
     </div>
   )
