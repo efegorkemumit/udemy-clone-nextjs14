@@ -16,7 +16,7 @@ type GetCourses = {
     categoryId:string;
 }
 
-export const getCourses async(
+export const getCourses = async(
     {userId, title, categoryId}:GetCourses): Promise<CourseWithProgressWithCategory[]>=>{
 
 
@@ -57,10 +57,13 @@ export const getCourses async(
             const coursesWithProgress : CourseWithProgressWithCategory[] = await Promise.all(
                 courses.map(async course=>{
                     if(course.purchases.length ===0){
-                        return(
+                        return{
+
                             ...course,
                             progress:null
-                        )
+                        }
+                           
+                        
                     }
 
                     const progressPercent = await getProgress(userId, course.id);
