@@ -1,7 +1,10 @@
 import { getChapter } from '@/actions/get_chapters';
 import VideoPlayer from '@/app/(course)/_components/VideoPlayer';
+import CourseSellButton from '@/app/(course)/_components/course-sell-button';
 import Banner from '@/components/Banner';
+import Preview from '@/components/Preview';
 import { auth } from '@clerk/nextjs';
+import { File } from 'lucide-react';
 import { redirect } from 'next/navigation';
 import React from 'react'
 
@@ -80,6 +83,64 @@ const ChapterPageID = async({params}:ChapterPageIDProps) => {
 
 
             </div>
+
+
+            <div className='p-3 flex flex-col md:flex-row items-center justify-between'>
+                <h2 className='text-3xl font-semibold text-purple-600 uppercase'>
+                    {chapter.title}
+                </h2>
+
+
+              {purchase ? (
+                <div>
+                test
+                </div>
+              ):
+              (
+                <CourseSellButton
+                courseId={params.courseId}
+                price={course.price}
+                />
+
+              )
+              }
+
+
+
+
+            </div>
+
+            <div className='mt-5 lg:mt-10'>
+            <Preview value={chapter.description}/>
+
+
+
+            </div>
+
+            {!!attachments.length &&(
+                <>
+
+                <div className='p-3'>
+                    {attachments.map((attach)=>(
+                        <a href={attach.url}
+                        target='_blank'
+                        key={attach.id}
+                        className='flex items-center bg-purple-500 text-white text-xs rounded-sm mb-2 w-full'>
+
+                            <File/>
+                            <p>
+                                {attach.name}
+                            </p>
+
+
+                        </a>
+                    ))}
+
+
+                </div>
+                
+                </>
+            )}
 
 
 
