@@ -1,7 +1,9 @@
 'use client'
 
 import { Button } from '@/components/ui/button';
+import { toast } from '@/components/ui/use-toast';
 import { formatPrice } from '@/lib/format';
+import axios from 'axios';
 import React, { useState } from 'react'
 
 interface CourseSellButtonProps{
@@ -9,16 +11,22 @@ interface CourseSellButtonProps{
     courseId:string
 }
 
-const CourseSellButton = async({courseId,price}:CourseSellButtonProps) => {
+const CourseSellButton = ({courseId,price}:CourseSellButtonProps) => {
 
     const [isLoading, setIsLoading]= useState(false)
 
     const  onClick = async()=>{
         try {
-            
-        } catch (error) {
-            
-        }   
+            setIsLoading(true);
+      
+            const response = await axios.post(`/api/courses/${courseId}/checkout`)
+      
+            window.location.assign(response.data.url);
+          } catch {
+            console.log("a")
+          } finally {
+            setIsLoading(false);
+          }
     }
   return (
     <Button
