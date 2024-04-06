@@ -105,3 +105,12 @@ model Purchase {
   updatedAt DateTime @updatedAt()
   @@index([courseId])
 }
+
+model StripeCustomer {
+  id  String @id @default(auto()) @map("_id")  @db.ObjectId
+  userId String @unique
+  stripeCustomerId String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
