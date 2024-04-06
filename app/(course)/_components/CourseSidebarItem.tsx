@@ -30,9 +30,9 @@ const CourseSidebarItem = ({courseId,id,isCompleted,isLocked,label}:CourseSideba
   <button onClick={onClick}
   type='button'
   className={cn("flex items-center gap-2 text-slate-600 font-semibold pl-6 hover:text-slate-950",
-  isActive && "text-purple-950 bg-slate-200",
-  isCompleted && "text-green-800 hover:text-green-400",
-  isCompleted && isActive && "bg-purple-300"
+  isActive && "text-purple-950 bg-slate-100",
+  isCompleted && "bg-green-400",
+  isCompleted && isActive && "bg-green-500"
 
   )}>
 

@@ -1,5 +1,6 @@
 import { getChapter } from '@/actions/get_chapters';
 import VideoPlayer from '@/app/(course)/_components/VideoPlayer';
+import CourseProgressButton from '@/app/(course)/_components/course-progress-button';
 import CourseSellButton from '@/app/(course)/_components/course-sell-button';
 import Banner from '@/components/Banner';
 import Preview from '@/components/Preview';
@@ -93,7 +94,13 @@ const ChapterPageID = async({params}:ChapterPageIDProps) => {
 
               {purchase ? (
                 <div>
-                test
+                <CourseProgressButton
+                chapterId={params.chapterId}
+                courseId={params.courseId}
+                nextChapterId={nextChapter?.id}
+                isCompleted={!!userProgress?.isCompleted}
+
+                />
                 </div>
               ):
               (
