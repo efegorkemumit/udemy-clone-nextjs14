@@ -23,7 +23,7 @@ const TeacherRoutes =[
     },
     {
         label:"Analytics",
-        href:"/teacher/analytics"
+        href:"/teacher"
     }
 ]
 
